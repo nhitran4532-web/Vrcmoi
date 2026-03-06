@@ -2,7 +2,6 @@
 header('Content-Type: application/json; charset=utf-8');
 
 $api_url = "https://api-gavang.gvtv1.com/api/live"; 
-
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_URL, $api_url);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -18,7 +17,7 @@ $output = [
     "name" => "HFB LIVE AUTO",
     "groups" => [
         [
-            "name" => "🔴 Trực Tiếp Hôm Nay",
+            "name" => "🔴 TRỰC TIẾP HÔM NAY (" . date("d/m") . ")",
             "display" => "grid",
             "channels" => []
         ]
@@ -27,7 +26,7 @@ $output = [
 
 if (empty($matches)) {
     $output['groups'][0]['channels'][] = [
-        "name" => "Hiện chưa có trận đấu",
+        "name" => "Hiện chưa có trận đấu nào",
         "image" => "https://i.imgur.com/vHdfXk8.png",
         "url" => ""
     ];
