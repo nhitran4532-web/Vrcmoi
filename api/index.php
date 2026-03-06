@@ -13,28 +13,18 @@ curl_close($ch);
 $data = json_decode($response, true);
 $matches = $data['data'] ?? [];
 
-$output = [
-    "name" => "HFB LIVE AUTO",
-    "groups" => [
-        [
-            "name" => "🔴 TRỰC TIẾP HÔM NAY (" . date("d/m") . ")",
-            "display" => "grid",
-            "channels" => []
-        ]
-    ]
-];
-
+$channels = [];
 if (empty($matches)) {
-    $output['groups'][0]['channels'][] = [
-        "name" => "Hiện chưa có trận đấu nào",
+    $channels[] = [
+        "name" => "Chưa có trận đấu nào",
         "image" => "https://i.imgur.com/vHdfXk8.png",
         "url" => ""
     ];
 } else {
     foreach ($matches as $m) {
-        $output['groups'][0]['channels'][] = [
+        $channels[] = [
             "name" => $m['title'],
-            "description" => ($m['league'] ?? "Bóng đá"),
+            "description" => "⚽ " . ($m['league'] ?? "Trực tiếp"),
             "image" => str_replace('\/', '/', $m['team_1_logo']),
             "url" => str_replace('\/', '/', $m['source_live']),
             "headers" => ["Referer" => "https://gvtv1.com/"]
@@ -42,5 +32,10 @@ if (empty($matches)) {
     }
 }
 
-echo json_encode($output, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+// Cấu trúc rút gọn để App hiện Grid đẹp
+echo json_encode([
+    "name" => "HFB AUTO LIVE",
+    "display" => "grid", 
+    "channels" => $channels
+], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
 ?>
