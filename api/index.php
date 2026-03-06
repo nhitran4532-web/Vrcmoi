@@ -1,4 +1,3 @@
-<?php
 header('Content-Type: application/json; charset=utf-8');
 
 $api_url = "https://api-gavang.gvtv1.com/api/live"; 
